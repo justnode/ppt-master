@@ -87,21 +87,21 @@ sudo apt install pandoc          # 可选
 | [Cursor](https://cursor.sh/) / [VS Code + Copilot](https://code.visualstudio.com/) | ⭐⭐ | 不错的替代方案 |
 | Codebuddy IDE | ⭐⭐ | 国产模型最佳选择（Kimi 2.5、MiniMax 2.7） |
 
-### 3. 配置项目
+### 3. 安装 Skill
 
 ```bash
-git clone https://github.com/hugohe3/ppt-master.git
-cd ppt-master
-uv sync
+npx skill add ./skills
 ```
 
-之后建议通过 `uv run` 执行项目脚本，例如：
+安装完成后，skill 通常位于 `~/.agents/skills/ppt-master`。
+
+如果你需要手动在已安装的 skill 上运行命令，请把已安装 skill 根目录作为 project：
 
 ```bash
-uv run python3 skills/ppt-master/scripts/update_repo.py
+uv run --project ~/.agents/skills/ppt-master python ~/.agents/skills/ppt-master/scripts/image_gen.py --list-backends
 ```
 
-如果你安装的是独立的全局 `skills/ppt-master`，其中的 Python 入口脚本在检测到 `uv` 时也会基于 `skills/ppt-master/requirements.txt` 自动拉起依赖；但像 `update_repo.py` 这类仓库维护命令仍然只能在完整 git 仓库中使用。
+当机器上有 `uv` 时，skill 中的 Python 入口脚本会基于已安装 skill 自带的 `pyproject.toml` 自动拉起依赖；像 `update_repo.py` 这类仓库维护命令不属于全局 skill 的使用方式。
 
 ### 4. 开始创作
 
@@ -121,7 +121,7 @@ AI 全程处理——内容分析、视觉设计、SVG 生成、PPTX 导出。
 
 > **输出说明：** 两个带时间戳的文件保存至 `exports/` — 原生形状版 `.pptx`（可直接编辑）和 `_svg.pptx` 快照版（视觉参考备份）。需要 Office 2016+。
 
-> **AI 迷失上下文？** 让它先读 `skills/ppt-master/SKILL.md`。
+> **AI 迷失上下文？** 让它先读已安装 `ppt-master` skill 里的 `SKILL.md`。
 
 > **遇到问题？** 查看 **[常见问题](./docs/zh/faq.md)** — 涵盖模型选择、排版问题、导出异常等，基于真实用户反馈持续更新。
 
@@ -139,7 +139,7 @@ GEMINI_MODEL=gemini-3.1-flash-image-preview
 
 支持的后端：`gemini` · `openai` · `qwen` · `zhipu` · `volcengine` · `stability` · `bfl` · `ideogram` · `siliconflow` · `fal` · `replicate`
 
-运行 `uv run python3 skills/ppt-master/scripts/image_gen.py --list-backends` 查看分级。环境变量优先于 `.env`。使用各家独立的 Key（`GEMINI_API_KEY`、`OPENAI_API_KEY` 等）——不支持全局 `IMAGE_API_KEY`。
+运行 `uv run --project ~/.agents/skills/ppt-master python ~/.agents/skills/ppt-master/scripts/image_gen.py --list-backends` 查看分级。环境变量优先于 `.env`。使用各家独立的 Key（`GEMINI_API_KEY`、`OPENAI_API_KEY` 等）——不支持全局 `IMAGE_API_KEY`。
 
 > **建议：** 高质量图片推荐在 [Gemini](https://gemini.google.com/) 中生成并选择 **Download full size**。去水印可用 `scripts/gemini_watermark_remover.py`。
 

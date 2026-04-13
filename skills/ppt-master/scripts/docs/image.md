@@ -2,6 +2,8 @@
 
 Image tools cover prompt-based generation, image inspection, and Gemini watermark removal.
 
+Commands in this document assume your current working directory is the installed `ppt-master` skill root.
+
 ## `image_gen.py`
 
 Unified image generation entry point.
@@ -32,7 +34,7 @@ uv run python3 scripts/image_gen.py "A product KV in cinematic style" --backend 
 Configuration sources:
 
 1. Current process environment variables
-2. Repo-root `.env` as a fallback
+2. The nearest `.env` found by walking upward from the current working directory
 
 The active backend must always be selected explicitly via `IMAGE_BACKEND`.
 

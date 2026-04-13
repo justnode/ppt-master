@@ -1,5 +1,7 @@
 # Troubleshooting
 
+Commands in this document assume your current working directory is the installed `ppt-master` skill root unless stated otherwise.
+
 ## Validation Failed
 
 1. Run:
@@ -51,10 +53,12 @@ Do not export directly from `svg_output/` when `svg_final/` exists.
 Most tools use the standard library. Install extra dependencies only when needed:
 
 ```bash
-uv sync
+uv sync --project .
 ```
 
-If you are running from a globally installed `skills/ppt-master` directory instead of a repository checkout, the Python entry scripts will auto-bootstrap from `skills/ppt-master/requirements.txt` when `uv` is available.
+This command creates the primary environment at `.venv` under the installed skill root.
+
+When you are running from a globally installed `~/.agents/skills/ppt-master` directory, the Python entry scripts will auto-bootstrap from its local `pyproject.toml` when `uv` is available.
 
 Important optional packages:
 - `python-pptx` for PPTX export

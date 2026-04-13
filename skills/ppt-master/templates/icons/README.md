@@ -46,9 +46,9 @@ uv run python3 scripts/svg_finalize/embed_icons.py svg_output/*.svg
 Use `ls | grep` — zero token cost:
 
 ```bash
-ls skills/ppt-master/templates/icons/chunk/ | grep home
-ls skills/ppt-master/templates/icons/tabler-filled/ | grep home
-ls skills/ppt-master/templates/icons/tabler-outline/ | grep chart
+ls templates/icons/chunk/ | grep home
+ls templates/icons/tabler-filled/ | grep home
+ls templates/icons/tabler-outline/ | grep chart
 ```
 
 ---

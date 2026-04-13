@@ -2,6 +2,8 @@
 
 Project tools create, validate, and inspect the standard PPT Master workspace.
 
+Commands in this document assume your current working directory is the installed `ppt-master` skill root.
+
 ## `project_manager.py`
 
 Main entry point for project setup and validation.

@@ -13,6 +13,8 @@ from pathlib import Path
 TOOLS_DIR = Path(__file__).resolve().parent
 SKILL_DIR = TOOLS_DIR.parent
 BOOTSTRAP_ENV_VAR = "PPT_MASTER_UV_BOOTSTRAPPED"
+SKILL_PYPROJECT_FILE = SKILL_DIR / "pyproject.toml"
+SKILL_UV_LOCK_FILE = SKILL_DIR / "uv.lock"
 
 
 def detect_repo_root() -> Path | None:
@@ -25,6 +27,13 @@ def detect_repo_root() -> Path | None:
 
 
 REPO_ROOT = detect_repo_root()
+
+
+def skill_project_file() -> Path | None:
+    """Return the skill-local pyproject when available."""
+    if SKILL_PYPROJECT_FILE.exists():
+        return SKILL_PYPROJECT_FILE
+    return None
 
 
 def find_env_file(start_dir: Path | None = None, max_levels: int = 6) -> Path | None:
@@ -56,14 +65,6 @@ def find_env_file(start_dir: Path | None = None, max_levels: int = 6) -> Path | 
     return None
 
 
-def requirements_file() -> Path | None:
-    """Return the skill-local requirements file when available."""
-    candidate = SKILL_DIR / "requirements.txt"
-    if candidate.exists():
-        return candidate
-    return None
-
-
 def _missing_modules(module_names: tuple[str, ...]) -> list[str]:
     missing: list[str] = []
     for module_name in module_names:
@@ -73,10 +74,7 @@ def _missing_modules(module_names: tuple[str, ...]) -> list[str]:
 
 
 def ensure_uv_runtime(*module_names: str) -> None:
-    """Re-exec under `uv run --with-requirements` when required packages are missing."""
-    req_file = requirements_file()
-    if req_file is None:
-        return
+    """Re-exec under the skill-local uv project when required packages are missing."""
     if os.environ.get(BOOTSTRAP_ENV_VAR) == "1":
         return
 
@@ -85,25 +83,35 @@ def ensure_uv_runtime(*module_names: str) -> None:
         return
 
     if shutil.which("uv") is None:
-        package_hint = ", ".join(module_names) if module_names else "the skill requirements"
+        project_file = skill_project_file()
+        package_hint = ", ".join(module_names) if module_names else "the skill runtime dependencies"
+        source_hint = str(project_file or SKILL_DIR)
         raise RuntimeError(
             "Missing Python dependencies for PPT Master "
-            f"({package_hint}). Install `uv` or install {req_file} manually."
+            f"({package_hint}). Install `uv` or install the dependencies declared in {source_hint} manually."
         )
 
     script_path = Path(sys.argv[0]).resolve()
     env = os.environ.copy()
     env[BOOTSTRAP_ENV_VAR] = "1"
-    os.execvpe(
-        "uv",
-        [
+    project_file = skill_project_file()
+    if project_file is not None:
+        env["PPT_MASTER_RUNTIME_SOURCE"] = "pyproject"
+        os.execvpe(
             "uv",
-            "run",
-            "--with-requirements",
-            str(req_file),
-            sys.executable,
-            str(script_path),
-            *sys.argv[1:],
-        ],
-        env,
+            [
+                "uv",
+                "run",
+                "--project",
+                str(SKILL_DIR),
+                "python",
+                str(script_path),
+                *sys.argv[1:],
+            ],
+            env,
+        )
+
+    raise RuntimeError(
+        "Missing Python dependencies for PPT Master and no skill-local dependency metadata was found. "
+        "Expected skills/ppt-master/pyproject.toml."
     )

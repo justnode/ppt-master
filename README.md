@@ -87,21 +87,21 @@ sudo apt install pandoc          # optional
 | [Cursor](https://cursor.sh/) / [VS Code + Copilot](https://code.visualstudio.com/) | ⭐⭐ | Good alternatives |
 | Codebuddy IDE | ⭐⭐ | Best for Chinese models (Kimi 2.5, MiniMax 2.7) |
 
-### 3. Set Up
+### 3. Install The Skill
 
 ```bash
-git clone https://github.com/hugohe3/ppt-master.git
-cd ppt-master
-uv sync
+npx skill add ./skills
 ```
 
-Then run project scripts with `uv run`, for example:
+After installation, the skill is typically available at `~/.agents/skills/ppt-master`.
+
+If you need to run a command manually from the installed skill, use the installed skill root as the project:
 
 ```bash
-uv run python3 skills/ppt-master/scripts/update_repo.py
+uv run --project ~/.agents/skills/ppt-master python ~/.agents/skills/ppt-master/scripts/image_gen.py --list-backends
 ```
 
-If you install only `skills/ppt-master` as a global skill, its Python entry scripts can also self-bootstrap from `skills/ppt-master/requirements.txt` when `uv` is available. Repository-only commands such as `update_repo.py` still require a full git checkout.
+When `uv` is available, the skill's Python entry scripts can auto-bootstrap from the installed skill's `pyproject.toml`. Repository-only commands such as `update_repo.py` are not part of the global-skill workflow.
 
 ### 4. Create
 
@@ -121,7 +121,7 @@ The AI handles everything — content analysis, visual design, SVG generation, a
 
 > **Output:** Two timestamped files are saved to `exports/` — a native-shapes `.pptx` (directly editable) and an `_svg.pptx` snapshot for visual reference. Requires Office 2016+.
 
-> **AI lost context?** Ask it to read `skills/ppt-master/SKILL.md`.
+> **AI lost context?** Ask it to read the installed `ppt-master` skill's `SKILL.md`.
 
 > **Something went wrong?** Check the **[FAQ](./docs/faq.md)** — it covers model selection, layout issues, export problems, and more. Continuously updated from real user reports.
 
@@ -139,7 +139,7 @@ GEMINI_MODEL=gemini-3.1-flash-image-preview
 
 Supported backends: `gemini` · `openai` · `qwen` · `zhipu` · `volcengine` · `stability` · `bfl` · `ideogram` · `siliconflow` · `fal` · `replicate`
 
-Run `uv run python3 skills/ppt-master/scripts/image_gen.py --list-backends` to see tiers. Environment variables override `.env`. Use provider-specific keys (`GEMINI_API_KEY`, `OPENAI_API_KEY`, etc.) — global `IMAGE_API_KEY` is not supported.
+Run `uv run --project ~/.agents/skills/ppt-master python ~/.agents/skills/ppt-master/scripts/image_gen.py --list-backends` to see tiers. Environment variables override `.env`. Use provider-specific keys (`GEMINI_API_KEY`, `OPENAI_API_KEY`, etc.) — global `IMAGE_API_KEY` is not supported.
 
 > **Tip:** For best quality, generate images in [Gemini](https://gemini.google.com/) and select **Download full size**. Remove the watermark with `scripts/gemini_watermark_remover.py`.
 

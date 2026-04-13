@@ -43,37 +43,40 @@ description: >
 > [!IMPORTANT]
 > ## 🧰 Global Skill Runtime
 >
-> - The Python entry scripts in this skill can run from a repository checkout or from a globally installed skill directory
-> - When `uv` is available, scripts that need third-party packages will auto-bootstrap from `${SKILL_DIR}/requirements.txt`
+> - This document uses the globally installed skill as the only command model
+> - All command examples in this document assume the current working directory is the installed skill root, typically `~/.agents/skills/ppt-master`
+> - The primary runtime dependency source is `pyproject.toml` in the installed skill root
+> - When `uv` is available, scripts that need third-party packages will auto-bootstrap from the skill-local uv project
+> - When a local virtual environment is created for this skill, the canonical location is `.venv` under the installed skill root
 > - `update_repo.py` is repository-only; when the skill is installed globally, update the source repository or reinstall the skill instead
 
 ## Main Pipeline Scripts
 
 | Script | Purpose |
 |--------|---------|
-| `${SKILL_DIR}/scripts/source_to_md/pdf_to_md.py` | PDF to Markdown |
-| `${SKILL_DIR}/scripts/source_to_md/doc_to_md.py` | Documents to Markdown via Pandoc (DOCX, EPUB, HTML, LaTeX, RST, etc.) |
-| `${SKILL_DIR}/scripts/source_to_md/ppt_to_md.py` | PowerPoint to Markdown |
-| `${SKILL_DIR}/scripts/source_to_md/web_to_md.py` | Web page to Markdown |
-| `${SKILL_DIR}/scripts/source_to_md/web_to_md.cjs` | WeChat / high-security sites to Markdown |
-| `${SKILL_DIR}/scripts/project_manager.py` | Project init / validate / manage |
-| `${SKILL_DIR}/scripts/analyze_images.py` | Image analysis |
-| `${SKILL_DIR}/scripts/image_gen.py` | AI image generation (multi-provider) |
-| `${SKILL_DIR}/scripts/svg_quality_checker.py` | SVG quality check |
-| `${SKILL_DIR}/scripts/total_md_split.py` | Speaker notes splitting |
-| `${SKILL_DIR}/scripts/finalize_svg.py` | SVG post-processing (unified entry) |
-| `${SKILL_DIR}/scripts/svg_to_pptx.py` | Export to PPTX |
+| `scripts/source_to_md/pdf_to_md.py` | PDF to Markdown |
+| `scripts/source_to_md/doc_to_md.py` | Documents to Markdown via Pandoc (DOCX, EPUB, HTML, LaTeX, RST, etc.) |
+| `scripts/source_to_md/ppt_to_md.py` | PowerPoint to Markdown |
+| `scripts/source_to_md/web_to_md.py` | Web page to Markdown |
+| `scripts/source_to_md/web_to_md.cjs` | WeChat / high-security sites to Markdown |
+| `scripts/project_manager.py` | Project init / validate / manage |
+| `scripts/analyze_images.py` | Image analysis |
+| `scripts/image_gen.py` | AI image generation (multi-provider) |
+| `scripts/svg_quality_checker.py` | SVG quality check |
+| `scripts/total_md_split.py` | Speaker notes splitting |
+| `scripts/finalize_svg.py` | SVG post-processing (unified entry) |
+| `scripts/svg_to_pptx.py` | Export to PPTX |
 
-For complete tool documentation, see `${SKILL_DIR}/scripts/README.md`.
-Python dependency manifest for standalone/global installs: `${SKILL_DIR}/requirements.txt`
+For complete tool documentation, see `scripts/README.md`.
+Primary Python dependency manifest for standalone/global installs: `pyproject.toml`
 
 ## Template Index
 
 | Index | Path | Purpose |
 |-------|------|---------|
-| Layout templates | `${SKILL_DIR}/templates/layouts/layouts_index.json` | Query available page layout templates |
-| Visualization templates | `${SKILL_DIR}/templates/charts/charts_index.json` | Query available visualization SVG templates (charts, infographics, diagrams, frameworks) |
-| Icon library | `${SKILL_DIR}/templates/icons/` | Search icons on demand: `ls templates/icons/<library>/ \| grep <keyword>` (libraries: `chunk/`, `tabler-filled/`, `tabler-outline/`) |
+| Layout templates | `templates/layouts/layouts_index.json` | Query available page layout templates |
+| Visualization templates | `templates/charts/charts_index.json` | Query available visualization SVG templates (charts, infographics, diagrams, frameworks) |
+| Icon library | `templates/icons/` | Search icons on demand: `ls templates/icons/<library>/ \| grep <keyword>` (libraries: `chunk/`, `tabler-filled/`, `tabler-outline/`) |
 
 ## Standalone Workflows
 
@@ -93,12 +96,12 @@ When the user provides non-Markdown content, convert immediately:
 
 | User Provides | Command |
 |---------------|---------|
-| PDF file | `python3 ${SKILL_DIR}/scripts/source_to_md/pdf_to_md.py <file>` |
-| DOCX / Word / Office document | `python3 ${SKILL_DIR}/scripts/source_to_md/doc_to_md.py <file>` |
-| PPTX / PowerPoint deck | `python3 ${SKILL_DIR}/scripts/source_to_md/ppt_to_md.py <file>` |
-| EPUB / HTML / LaTeX / RST / other | `python3 ${SKILL_DIR}/scripts/source_to_md/doc_to_md.py <file>` |
-| Web link | `python3 ${SKILL_DIR}/scripts/source_to_md/web_to_md.py <URL>` |
-| WeChat / high-security site | `node ${SKILL_DIR}/scripts/source_to_md/web_to_md.cjs <URL>` |
+| PDF file | `python3 scripts/source_to_md/pdf_to_md.py <file>` |
+| DOCX / Word / Office document | `python3 scripts/source_to_md/doc_to_md.py <file>` |
+| PPTX / PowerPoint deck | `python3 scripts/source_to_md/ppt_to_md.py <file>` |
+| EPUB / HTML / LaTeX / RST / other | `python3 scripts/source_to_md/doc_to_md.py <file>` |
+| Web link | `python3 scripts/source_to_md/web_to_md.py <URL>` |
+| WeChat / high-security site | `node scripts/source_to_md/web_to_md.cjs <URL>` |
 | Markdown | Read directly |
 
 **✅ Checkpoint — Confirm source content is ready, proceed to Step 2.**
@@ -110,7 +113,7 @@ When the user provides non-Markdown content, convert immediately:
 🚧 **GATE**: Step 1 complete; source content is ready (Markdown file, user-provided text, or requirements described in conversation are all valid).
 
 ```bash
-python3 ${SKILL_DIR}/scripts/project_manager.py init <project_name> --format <format>
+python3 scripts/project_manager.py init <project_name> --format <format>
 ```
 
 Format options: `ppt169` (default), `ppt43`, `xhs`, `story`, etc. For the full format list, see `references/canvas-formats.md`.
@@ -119,7 +122,7 @@ Import source content (choose based on the situation):
 
 | Situation | Action |
 |-----------|--------|
-| Has source files (PDF/MD/etc.) | `python3 ${SKILL_DIR}/scripts/project_manager.py import-sources <project_path> <source_files...> --move` |
+| Has source files (PDF/MD/etc.) | `python3 scripts/project_manager.py import-sources <project_path> <source_files...> --move` |
 | User provided text directly in conversation | No import needed — content is already in conversation context; subsequent steps can reference it directly |
 
 > ⚠️ **MUST use `--move`**: All source files (original PDF / MD / images) MUST be **moved** (not copied) into `sources/` for archiving.
@@ -140,7 +143,7 @@ Import source content (choose based on the situation):
 **⚡ Early-exit**: If the user has already stated "no template" / "不使用模板" / "自由设计" (or equivalent) at any prior point in the conversation, **do NOT query `layouts_index.json`** — skip directly to Step 4. This avoids unnecessary token consumption.
 
 **Template recommendation flow** (only when the user has NOT yet decided):
-Query `${SKILL_DIR}/templates/layouts/layouts_index.json` to list available templates and their style descriptions.
+Query `templates/layouts/layouts_index.json` to list available templates and their style descriptions.
 **When presenting options, you MUST provide a professional recommendation based on the current PPT topic and content** (recommend a specific template or free design, with reasoning), then ask the user:
 
 > 💡 **AI Recommendation**: Based on your content topic (brief summary), I recommend **[specific template / free design]** because...
@@ -151,10 +154,10 @@ Query `${SKILL_DIR}/templates/layouts/layouts_index.json` to list available temp
 
 After the user confirms option A, copy template files to the project directory:
 ```bash
-cp ${SKILL_DIR}/templates/layouts/<template_name>/*.svg <project_path>/templates/
-cp ${SKILL_DIR}/templates/layouts/<template_name>/design_spec.md <project_path>/templates/
-cp ${SKILL_DIR}/templates/layouts/<template_name>/*.png <project_path>/images/ 2>/dev/null || true
-cp ${SKILL_DIR}/templates/layouts/<template_name>/*.jpg <project_path>/images/ 2>/dev/null || true
+cp templates/layouts/<template_name>/*.svg <project_path>/templates/
+cp templates/layouts/<template_name>/design_spec.md <project_path>/templates/
+cp templates/layouts/<template_name>/*.png <project_path>/images/ 2>/dev/null || true
+cp templates/layouts/<template_name>/*.jpg <project_path>/images/ 2>/dev/null || true
 ```
 
 After the user confirms option B, proceed directly to Step 4.
@@ -191,7 +194,7 @@ Read references/strategist.md
 
 If the user has provided images, run the analysis script **before outputting the design spec** (do NOT directly read/open image files — use the script output only):
 ```bash
-python3 ${SKILL_DIR}/scripts/analyze_images.py <project_path>/images
+python3 scripts/analyze_images.py <project_path>/images
 ```
 
 > ⚠️ **Image handling rule**: The AI must NEVER directly read, open, or view image files (`.jpg`, `.png`, etc.). All image information must come from the `analyze_images.py` script output or the Design Specification's Image Resource List.
@@ -220,7 +223,7 @@ Read `references/image-generator.md`
 2. Generate prompt document → `<project_path>/images/image_prompts.md`
 3. Generate images (CLI tool recommended):
    ```bash
-   python3 ${SKILL_DIR}/scripts/image_gen.py "prompt" --aspect_ratio 16:9 --image_size 1K -o <project_path>/images
+   python3 scripts/image_gen.py "prompt" --aspect_ratio 16:9 --image_size 1K -o <project_path>/images
    ```
 
 **✅ Checkpoint — Confirm all images are ready, proceed to Step 6**:
@@ -275,17 +278,17 @@ Read references/executor-consultant-top.md # Top consulting style (MBB level)
 
 **Step 7.1** — Split speaker notes:
 ```bash
-python3 ${SKILL_DIR}/scripts/total_md_split.py <project_path>
+python3 scripts/total_md_split.py <project_path>
 ```
 
 **Step 7.2** — SVG post-processing (icon embedding / image crop & embed / text flattening / rounded rect to path):
 ```bash
-python3 ${SKILL_DIR}/scripts/finalize_svg.py <project_path>
+python3 scripts/finalize_svg.py <project_path>
 ```
 
 **Step 7.3** — Export PPTX (embeds speaker notes by default):
 ```bash
-python3 ${SKILL_DIR}/scripts/svg_to_pptx.py <project_path> -s final
+python3 scripts/svg_to_pptx.py <project_path> -s final
 # Output: exports/<project_name>_<timestamp>.pptx + exports/<project_name>_<timestamp>_svg.pptx
 # Use --only native  to skip SVG reference version
 # Use --only legacy  to only generate SVG image version

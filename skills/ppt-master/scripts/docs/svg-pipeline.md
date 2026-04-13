@@ -2,6 +2,8 @@
 
 These tools cover post-processing, SVG validation, speaker notes, and PPTX export.
 
+Commands in this document assume your current working directory is the installed `ppt-master` skill root.
+
 ## Recommended Pipeline
 
 Run these steps in order:

@@ -2,6 +2,8 @@
 
 Source conversion tools turn PDFs, documents, slide decks, and web pages into Markdown before project creation.
 
+Commands in this document assume your current working directory is the installed `ppt-master` skill root.
+
 ## `source_to_md/pdf_to_md.py`
 
 Recommended first choice for native PDFs.

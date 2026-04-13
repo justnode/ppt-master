@@ -2,10 +2,14 @@
 
 This directory contains user-facing scripts for conversion, project setup, SVG processing, export, and image generation.
 
+Commands in this document assume your current working directory is the installed `ppt-master` skill root.
+
 ## Runtime Notes
 
-- In a repository checkout, `uv sync` remains the recommended setup
-- In a globally installed skill, Python entry scripts auto-bootstrap from `../requirements.txt` when `uv` is available
+- The primary runtime dependency source is `../pyproject.toml`
+- If you manually initialize a local environment for the installed skill, run `uv sync --project .`
+- That setup creates the canonical virtual environment at `.venv`
+- In a globally installed skill, Python entry scripts auto-bootstrap from the skill-local uv project when `uv` is available
 - `update_repo.py` only works inside a git checkout of the ppt-master repository
 
 ## Directory Layout
@@ -33,12 +37,6 @@ uv run python3 scripts/finalize_svg.py <project_path>
 uv run python3 scripts/svg_to_pptx.py <project_path> -s final
 ```
 
-Repository update:
-
-```bash
-uv run python3 scripts/update_repo.py
-```
-
 ## Script Index
 
 | Area | Primary scripts | Documentation |
@@ -47,7 +45,6 @@ uv run python3 scripts/update_repo.py
 | Project management | `project_manager.py`, `batch_validate.py`, `generate_examples_index.py`, `error_helper.py`, `pptx_template_import.py` | [docs/project.md](./docs/project.md) |
 | SVG pipeline | `finalize_svg.py`, `svg_to_pptx.py`, `total_md_split.py`, `svg_quality_checker.py` | [docs/svg-pipeline.md](./docs/svg-pipeline.md) |
 | Image tools | `image_gen.py`, `analyze_images.py`, `gemini_watermark_remover.py` | [docs/image.md](./docs/image.md) |
-| Repo maintenance | `update_repo.py` | README install/update section |
 | Troubleshooting | validation, preview, export, dependency issues | [docs/troubleshooting.md](./docs/troubleshooting.md) |
 
 ## High-Frequency Commands
@@ -90,13 +87,6 @@ Image generation:
 uv run python3 scripts/image_gen.py "A modern futuristic workspace"
 uv run python3 scripts/image_gen.py --list-backends
 uv run python3 scripts/analyze_images.py <project_path>/images
-```
-
-Repository update:
-
-```bash
-uv run python3 scripts/update_repo.py
-uv run python3 scripts/update_repo.py --skip-python-sync
 ```
 
 ## Recommendations

@@ -2,8 +2,8 @@
 """Update the repository and sync Python dependencies when needed.
 
 Usage:
-    uv run python3 skills/ppt-master/scripts/update_repo.py
-    uv run python3 skills/ppt-master/scripts/update_repo.py --skip-python-sync
+    python3 <repo_checkout>/skills/ppt-master/scripts/update_repo.py
+    python3 <repo_checkout>/skills/ppt-master/scripts/update_repo.py --skip-python-sync
 """
 
 from __future__ import annotations
@@ -18,12 +18,12 @@ from pathlib import Path
 if str(Path(__file__).resolve().parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from runtime_support import REPO_ROOT
+from runtime_support import REPO_ROOT, SKILL_PYPROJECT_FILE, SKILL_UV_LOCK_FILE
 
 TOOLS_DIR = Path(__file__).resolve().parent
 SKILL_DIR = TOOLS_DIR.parent
-PYPROJECT_FILE = REPO_ROOT / "pyproject.toml" if REPO_ROOT else None
-UV_LOCK_FILE = REPO_ROOT / "uv.lock" if REPO_ROOT else None
+ROOT_PYPROJECT_FILE = REPO_ROOT / "pyproject.toml" if REPO_ROOT else None
+ROOT_UV_LOCK_FILE = REPO_ROOT / "uv.lock" if REPO_ROOT else None
 
 
 def parse_args() -> argparse.Namespace:
@@ -91,15 +91,12 @@ def get_head_revision() -> str:
     return result.stdout.strip()
 
 
-def sync_python_dependencies() -> None:
-    if PYPROJECT_FILE is None or not PYPROJECT_FILE.exists():
-        print("pyproject.toml not found; skipping Python dependency sync.")
-        return
+def sync_project_dependencies(project_dir: Path, label: str) -> None:
     if shutil.which("uv") is None:
         raise RuntimeError("Missing executable: uv")
 
-    print("Dependency files changed. Syncing Python dependencies with uv...")
-    result = run_command(["uv", "sync"])
+    print(f"Dependency files changed. Syncing Python dependencies for {label} with uv...")
+    result = run_command(["uv", "sync", "--project", str(project_dir)])
 
     if result.stdout.strip():
         print(result.stdout.strip())
@@ -116,8 +113,10 @@ def main() -> int:
 
         before_head = get_head_revision()
         before_dependency_state = {
-            "pyproject": file_digest(PYPROJECT_FILE) if PYPROJECT_FILE else None,
-            "uv_lock": file_digest(UV_LOCK_FILE) if UV_LOCK_FILE else None,
+            "root_pyproject": file_digest(ROOT_PYPROJECT_FILE) if ROOT_PYPROJECT_FILE else None,
+            "root_uv_lock": file_digest(ROOT_UV_LOCK_FILE) if ROOT_UV_LOCK_FILE else None,
+            "skill_pyproject": file_digest(SKILL_PYPROJECT_FILE),
+            "skill_uv_lock": file_digest(SKILL_UV_LOCK_FILE),
         }
 
         print(f"Repository: {REPO_ROOT}")
@@ -129,8 +128,10 @@ def main() -> int:
 
         after_head = get_head_revision()
         after_dependency_state = {
-            "pyproject": file_digest(PYPROJECT_FILE) if PYPROJECT_FILE else None,
-            "uv_lock": file_digest(UV_LOCK_FILE) if UV_LOCK_FILE else None,
+            "root_pyproject": file_digest(ROOT_PYPROJECT_FILE) if ROOT_PYPROJECT_FILE else None,
+            "root_uv_lock": file_digest(ROOT_UV_LOCK_FILE) if ROOT_UV_LOCK_FILE else None,
+            "skill_pyproject": file_digest(SKILL_PYPROJECT_FILE),
+            "skill_uv_lock": file_digest(SKILL_UV_LOCK_FILE),
         }
 
         if before_head == after_head:
@@ -140,10 +141,27 @@ def main() -> int:
 
         if args.skip_python_sync:
             print("Skipped Python dependency sync.")
-        elif before_dependency_state != after_dependency_state:
-            sync_python_dependencies()
         else:
-            print("Dependency files unchanged. Skipping Python dependency sync.")
+            synced_any = False
+            root_changed = (
+                before_dependency_state["root_pyproject"] != after_dependency_state["root_pyproject"]
+                or before_dependency_state["root_uv_lock"] != after_dependency_state["root_uv_lock"]
+            )
+            skill_changed = (
+                before_dependency_state["skill_pyproject"] != after_dependency_state["skill_pyproject"]
+                or before_dependency_state["skill_uv_lock"] != after_dependency_state["skill_uv_lock"]
+            )
+
+            if root_changed and ROOT_PYPROJECT_FILE is not None and ROOT_PYPROJECT_FILE.exists():
+                sync_project_dependencies(REPO_ROOT, "repo root")
+                synced_any = True
+
+            if skill_changed and SKILL_PYPROJECT_FILE.exists():
+                sync_project_dependencies(SKILL_DIR, "skills/ppt-master")
+                synced_any = True
+
+            if not synced_any:
+                print("Dependency files unchanged. Skipping Python dependency sync.")
 
         print("Note: system dependencies such as Node.js and Pandoc still need to be installed manually.")
         return 0

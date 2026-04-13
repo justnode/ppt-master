@@ -11,30 +11,32 @@ PPT Master is an AI-driven presentation generation system. Through multi-role co
 ## Common Commands
 
 ```bash
+cd ~/.agents/skills/ppt-master
+
 # Source content conversion
-uv run python3 skills/ppt-master/scripts/source_to_md/pdf_to_md.py <PDF_file>
-uv run python3 skills/ppt-master/scripts/source_to_md/doc_to_md.py <DOCX_or_other_file>   # Requires: pandoc (DOCX/EPUB/HTML/LaTeX/RST/etc.)
-uv run python3 skills/ppt-master/scripts/source_to_md/web_to_md.py <URL>
-node skills/ppt-master/scripts/source_to_md/web_to_md.cjs <URL>
+uv run --project . python scripts/source_to_md/pdf_to_md.py <PDF_file>
+uv run --project . python scripts/source_to_md/doc_to_md.py <DOCX_or_other_file>   # Requires: pandoc (DOCX/EPUB/HTML/LaTeX/RST/etc.)
+uv run --project . python scripts/source_to_md/web_to_md.py <URL>
+node scripts/source_to_md/web_to_md.cjs <URL>
 
 # Project management
-uv run python3 skills/ppt-master/scripts/project_manager.py init <project_name> --format ppt169
-uv run python3 skills/ppt-master/scripts/project_manager.py import-sources <project_path> <source_files_or_URLs...> --move
-uv run python3 skills/ppt-master/scripts/project_manager.py validate <project_path>
+uv run --project . python scripts/project_manager.py init <project_name> --format ppt169
+uv run --project . python scripts/project_manager.py import-sources <project_path> <source_files_or_URLs...> --move
+uv run --project . python scripts/project_manager.py validate <project_path>
 
 # Image tools
-uv run python3 skills/ppt-master/scripts/analyze_images.py <project_path>/images
-uv run python3 skills/ppt-master/scripts/image_gen.py "prompt" --aspect_ratio 16:9 --image_size 1K -o <project_path>/images
+uv run --project . python scripts/analyze_images.py <project_path>/images
+uv run --project . python scripts/image_gen.py "prompt" --aspect_ratio 16:9 --image_size 1K -o <project_path>/images
 
 # SVG quality check
-uv run python3 skills/ppt-master/scripts/svg_quality_checker.py <project_path>
+uv run --project . python scripts/svg_quality_checker.py <project_path>
 
 # Post-processing pipeline (MUST run sequentially, one at a time — NEVER batch)
-uv run python3 skills/ppt-master/scripts/total_md_split.py <project_path>
+uv run --project . python scripts/total_md_split.py <project_path>
 # ✅ Confirm no errors before running the next command
-uv run python3 skills/ppt-master/scripts/finalize_svg.py <project_path>
+uv run --project . python scripts/finalize_svg.py <project_path>
 # ✅ Confirm no errors before running the next command
-uv run python3 skills/ppt-master/scripts/svg_to_pptx.py <project_path> -s final
+uv run --project . python scripts/svg_to_pptx.py <project_path> -s final
 # Output: exports/<project_name>_<timestamp>.pptx + exports/<project_name>_<timestamp>_svg.pptx
 # Use --only native  to skip SVG reference version
 # Use --only legacy  to only generate SVG image version
