@@ -1,26 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" width="1280" height="720">
-  <!-- Background -->
+  
   <rect x="0" y="0" width="1280" height="720" fill="#ffffff" />
   
-  <!-- Header -->
+  
   <rect x="30" y="20" width="10" height="40" fill="#C00000" />
   <text x="50" y="55" font-family="Microsoft YaHei, sans-serif" font-size="36" font-weight="bold" fill="#C00000">1 公司运维AI建设总体视图</text>
   
-  <!-- Subtitle -->
+  
   <rect x="30" y="80" width="1220" height="60" fill="#F2F2F2" />
   <text x="640" y="105" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="bold" fill="#000000" text-anchor="middle">
     <tspan x="640" dy="0">聚焦用户故障压降，提升优化一键诊断能力，实现降本提质；深入系统架构具备一键故障定位；借助大数据核心网实现网络效能提升；通过能</tspan>
     <tspan x="640" dy="25">力封装、跨域拉通、知识沉淀、智能编排、开放共享等五大举措，深化AI大模型应用，重塑故障诊断处置流程，做深做实1-5-10</tspan>
   </text>
   
-  <!-- Large Triangle Background (simplified to a polygon) -->
+  
   <polygon points="640,160 30,340 1250,340" fill="#F8CBAD" fill-opacity="0.3" stroke="none" />
   
-  <!-- Target Bar -->
-  <rect x="300" y="160" width="680" height="40" fill="#C00000" rx="5" ry="5"/>
+  
+  <rect x="300" y="160" width="680" height="40" fill="#C00000" rx="5" ry="5" />
   <text x="640" y="188" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="bold" fill="#FFFFFF" text-anchor="middle">以故障双压降，快速定位故障问题为目标</text>
 
-  <!-- Metrics -->
+  
   <text x="50" y="240" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="bold" fill="#C00000">成效</text>
   
   <rect x="120" y="215" width="140" height="35" fill="#FFFFFF" stroke="#F2F2F2" stroke-width="2" />
@@ -48,7 +48,7 @@
     <tspan x="1190" dy="20" fill="#C00000">150万</tspan>
   </text>
   
-  <!-- Scenarios -->
+  
   <text x="50" y="320" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="bold" fill="#000000">应用</text>
   <text x="50" y="345" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="bold" fill="#000000">场景</text>
   
@@ -64,7 +64,7 @@
   <rect x="840" y="310" width="220" height="40" fill="#2E75B6" />
   <text x="950" y="336" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="bold" fill="#FFFFFF" text-anchor="middle">系统故障快速定位诊断</text>
   
-  <!-- Orchestration & Release Panel -->
+  
   <rect x="30" y="390" width="30" height="30" fill="#C00000" />
   <text x="45" y="412" font-family="Microsoft YaHei, sans-serif" font-size="18" font-weight="bold" fill="#FFFFFF" text-anchor="middle">4</text>
   <text x="50" y="460" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="bold" fill="#000000">智能体</text>
@@ -74,13 +74,13 @@
   <rect x="120" y="390" width="940" height="30" fill="#FDF3EB" />
   <text x="590" y="412" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="bold" fill="#000000" text-anchor="middle">持续迭代用户一键诊断智能体能力；引入RPA，针对固化场景实现RPA数字员工；建设系统故障诊断处置Agent</text>
   
-  <rect x="140" y="440" width="280" height="90" fill="none" stroke="#2E75B6" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="140" y="440" width="280" height="90" fill="none" stroke="#2E75B6" stroke-width="1" stroke-dasharray="3 3" />
   <rect x="160" y="450" width="240" height="30" fill="#5B9BD5" />
   <text x="280" y="471" font-family="Microsoft YaHei, sans-serif" font-size="14" fill="#FFFFFF" text-anchor="middle">网络：AI一键排障助手</text>
   <rect x="160" y="490" width="240" height="30" fill="#5B9BD5" />
   <text x="280" y="511" font-family="Microsoft YaHei, sans-serif" font-size="14" fill="#FFFFFF" text-anchor="middle">IT：AI一键查询助手</text>
   
-  <rect x="440" y="440" width="280" height="90" fill="none" stroke="#C00000" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="440" y="440" width="280" height="90" fill="none" stroke="#C00000" stroke-width="1" stroke-dasharray="3 3" />
   <rect x="460" y="445" width="240" height="25" fill="#5B9BD5" />
   <text x="580" y="462" font-family="Microsoft YaHei, sans-serif" font-size="14" fill="#FFFFFF" text-anchor="middle">NB工单自动化处理</text>
   <rect x="460" y="475" width="240" height="25" fill="#5B9BD5" />
@@ -88,7 +88,7 @@
   <rect x="460" y="505" width="240" height="25" fill="#5B9BD5" />
   <text x="580" y="522" font-family="Microsoft YaHei, sans-serif" font-size="14" fill="#FFFFFF" text-anchor="middle">IT自动化测试</text>
   
-  <rect x="740" y="440" width="280" height="90" fill="none" stroke="#C00000" stroke-width="1" stroke-dasharray="3 3"/>
+  <rect x="740" y="440" width="280" height="90" fill="none" stroke="#C00000" stroke-width="1" stroke-dasharray="3 3" />
   <rect x="760" y="445" width="240" height="25" fill="#5B9BD5" />
   <text x="880" y="462" font-family="Microsoft YaHei, sans-serif" font-size="14" fill="#FFFFFF" text-anchor="middle">自动化巡检</text>
   <rect x="760" y="475" width="240" height="25" fill="#5B9BD5" />
@@ -110,9 +110,6 @@
   <rect x="1100" y="590" width="120" height="40" fill="#E7E6E6" />
   <text x="1160" y="615" font-family="Microsoft YaHei, sans-serif" font-size="14" fill="#000000" text-anchor="middle">集同昆仑平台</text>
   <rect x="1100" y="640" width="120" height="40" fill="#E7E6E6" />
-  <text x="1160" y="665" font-family="Microsoft YaHei, sans-serif" font-size="14" fill="#000000" text-anchor="middle">B客户推广</text>
-  
-  <!-- Base Capabilities -->
   <text x="50" y="620" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="bold" fill="#000000">基础</text>
   <text x="50" y="645" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="bold" fill="#000000">能力</text>
   

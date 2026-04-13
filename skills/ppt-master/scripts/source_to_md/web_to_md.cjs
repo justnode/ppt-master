@@ -14,9 +14,57 @@ const path = require("path");
 const https = require("https");
 const http = require("http");
 
+const WORKSPACE_ENV_VARS = [
+  "PPT_MASTER_WORKSPACE_ROOT",
+  "PPT_MASTER_PROJECTS_ROOT",
+  "CODEX_WORKSPACE_ROOT",
+  "CODEX_PROJECT_ROOT",
+  "CLAUDE_WORKSPACE_ROOT",
+  "CLAUDE_PROJECT_DIR",
+  "INIT_CWD",
+];
+
+function isWithinPath(targetPath, parentPath) {
+  const relative = path.relative(path.resolve(parentPath), path.resolve(targetPath));
+  return relative === "" || (!relative.startsWith("..") && !path.isAbsolute(relative));
+}
+
+function resolveWorkspaceRoot() {
+  for (const envVar of WORKSPACE_ENV_VARS) {
+    const rawValue = (process.env[envVar] || "").trim();
+    if (!rawValue) continue;
+    const candidate = path.resolve(rawValue);
+    return candidate;
+  }
+
+  const cwd = process.cwd();
+  const skillRoot = path.resolve(__dirname, "..", "..");
+  if (!isWithinPath(cwd, skillRoot)) {
+    return cwd;
+  }
+
+  const oldPwd = (process.env.OLDPWD || "").trim();
+  if (oldPwd) {
+    const candidate = path.resolve(oldPwd);
+    if (!isWithinPath(candidate, skillRoot)) {
+      return candidate;
+    }
+  }
+
+  return cwd;
+}
+
+function resolveProjectsDir(dirArg) {
+  const workspaceRoot = resolveWorkspaceRoot();
+  if (!dirArg) {
+    return path.join(workspaceRoot, "projects");
+  }
+  return path.isAbsolute(dirArg) ? dirArg : path.join(workspaceRoot, dirArg);
+}
+
 // ============ Config ============
 const CONFIG = {
-  outputDir: "./projects",
+  outputDir: resolveProjectsDir(),
   timeout: 30000,
   userAgent:
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -751,7 +799,7 @@ async function main() {
       "    -o, --output <file>  Specify output filename (single URL only)"
     );
     console.log(
-      "    -d, --dir <dir>      Specify output directory (default: ./output)"
+      "    -d, --dir <dir>      Specify output directory (default: <workspace>/projects)"
     );
     console.log("    -h, --help           Show help");
     console.log("");
@@ -797,7 +845,7 @@ async function main() {
     }
 
     if (arg === "-d" || arg === "--dir") {
-      CONFIG.outputDir = args[++i];
+      CONFIG.outputDir = resolveProjectsDir(args[++i]);
       continue;
     }
 

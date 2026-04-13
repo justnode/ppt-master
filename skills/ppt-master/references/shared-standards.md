@@ -193,7 +193,7 @@ Logically related elements **MUST** be wrapped in `<g>` tags. This produces Powe
 | List item | Bullet / number + icon + title + description |
 | Icon-text combo | Icon element + adjacent label |
 | Page header | Title + subtitle + accent decoration |
-| Page footer | Page number + branding |
+| Optional footer | Use only when explicitly requested; default is no bottom footer band |
 | Decorative cluster | Related decorative shapes (rings, orbs, dots) |
 
 **Example**:

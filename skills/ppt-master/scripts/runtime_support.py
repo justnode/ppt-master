@@ -15,6 +15,15 @@ SKILL_DIR = TOOLS_DIR.parent
 BOOTSTRAP_ENV_VAR = "PPT_MASTER_UV_BOOTSTRAPPED"
 SKILL_PYPROJECT_FILE = SKILL_DIR / "pyproject.toml"
 SKILL_UV_LOCK_FILE = SKILL_DIR / "uv.lock"
+WORKSPACE_ENV_VARS = (
+    "PPT_MASTER_WORKSPACE_ROOT",
+    "PPT_MASTER_PROJECTS_ROOT",
+    "CODEX_WORKSPACE_ROOT",
+    "CODEX_PROJECT_ROOT",
+    "CLAUDE_WORKSPACE_ROOT",
+    "CLAUDE_PROJECT_DIR",
+    "INIT_CWD",
+)
 
 
 def detect_repo_root() -> Path | None:
@@ -34,6 +43,52 @@ def skill_project_file() -> Path | None:
     if SKILL_PYPROJECT_FILE.exists():
         return SKILL_PYPROJECT_FILE
     return None
+
+
+def is_within_path(path: Path, parent: Path) -> bool:
+    """Return whether `path` resolves inside `parent`."""
+    try:
+        path.resolve().relative_to(parent.resolve())
+        return True
+    except ValueError:
+        return False
+
+
+def resolve_workspace_root() -> Path:
+    """Resolve the caller workspace root instead of the skill install directory."""
+    for env_var in WORKSPACE_ENV_VARS:
+        raw_value = os.environ.get(env_var, "").strip()
+        if not raw_value:
+            continue
+        candidate = Path(raw_value).expanduser()
+        if candidate.exists():
+            return candidate.resolve()
+
+    cwd = Path.cwd().resolve()
+    if not is_within_path(cwd, SKILL_DIR):
+        return cwd
+
+    oldpwd = os.environ.get("OLDPWD", "").strip()
+    if oldpwd:
+        candidate = Path(oldpwd).expanduser()
+        if candidate.exists():
+            candidate = candidate.resolve()
+            if not is_within_path(candidate, SKILL_DIR):
+                return candidate
+
+    return cwd
+
+
+def resolve_projects_dir(base_dir: str | Path | None = None) -> Path:
+    """Resolve the projects directory relative to the caller workspace by default."""
+    workspace_root = resolve_workspace_root()
+    if base_dir is None:
+        return workspace_root / "projects"
+
+    candidate = Path(base_dir).expanduser()
+    if candidate.is_absolute():
+        return candidate
+    return workspace_root / candidate
 
 
 def find_env_file(start_dir: Path | None = None, max_levels: int = 6) -> Path | None:

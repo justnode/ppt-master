@@ -45,19 +45,6 @@ Drop in a PDF, DOCX, URL, or Markdown — get back a **natively editable PowerPo
   </tr>
 </table>
 
----
-
-## Built by Hugo He
-
-I'm a finance professional (CPA · CPV · Consulting Engineer) who got tired of spending hours on presentations that could be automated. So I built this.
-
-PPT Master started from a simple frustration: existing AI slide tools export images, not editable shapes. As someone who reviews and edits hundreds of slides in investment and consulting work, that was unacceptable. I wanted real DrawingML — click on any element and change it, just like you built it by hand.
-
-This project is my attempt to bridge the gap between **domain expertise** and **product engineering** — turning a complex professional pain point into an open-source tool that anyone can use.
-
-🌐 [Personal website](https://www.hehugo.com/) · 📧 [heyug3@gmail.com](mailto:heyug3@gmail.com) · 🐙 [@hugohe3](https://github.com/hugohe3)
-
----
 
 ## Quick Start
 
@@ -165,57 +152,3 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to get involved.
 ## License
 
 [MIT](LICENSE)
-
-## Acknowledgments
-
-[SVG Repo](https://www.svgrepo.com/) · [Tabler Icons](https://github.com/tabler/tabler-icons) · [Robin Williams](https://en.wikipedia.org/wiki/Robin_Williams_(author)) (CRAP principles) · McKinsey, BCG, Bain
-
-## Contact & Collaboration
-
-Looking to collaborate, integrate PPT Master into your workflow, or just have questions?
-
-- 💬 **Questions & sharing** — [GitHub Discussions](https://github.com/hugohe3/ppt-master/discussions)
-- 🐛 **Bug reports & feature requests** — [GitHub Issues](https://github.com/hugohe3/ppt-master/issues)
-- 📧 **Business & consulting inquiries** — [heyug3@gmail.com](mailto:heyug3@gmail.com)
-- 🌐 **Learn more about the author** — [www.hehugo.com](https://www.hehugo.com/)
-
----
-
-## Star History
-
-If this project helps you, please give it a ⭐!
-
-<a href="https://star-history.com/#hugohe3/ppt-master&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=hugohe3/ppt-master&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=hugohe3/ppt-master&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=hugohe3/ppt-master&type=Date" />
- </picture>
-</a>
-
----
-
-## Supported by DigitalOcean
-
-<p>This project is supported by:</p>
-<p>
-  <a href="https://m.do.co/c/547f129aabe1">
-    <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/PoweredByDO/DO_Powered_by_Badge_blue.svg" alt="Powered by DigitalOcean" width="201" />
-  </a>
-</p>
-
----
-
-## Sponsor
-
-If this project saves you time, consider buying me a coffee!
-
-**Alipay / 支付宝**
-
-<img src="docs/assets/alipay-qr.jpg" alt="Alipay QR Code" width="250" />
-
----
-
-Made with ❤️ by [Hugo He](https://www.hehugo.com/)
-
-[⬆ Back to Top](#ppt-master--ai-generates-natively-editable-pptx-from-any-document)

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""PPT Master - SVG to PPTX Tool (thin wrapper).
+"""PPT Master - SVG to HTML slideshow tool (thin wrapper).
 
-Delegates to the svg_to_pptx package. Kept for CLI backward compatibility:
+Delegates to the svg_to_pptx package. The command name is kept for CLI
+backward compatibility:
     uv run python3 scripts/svg_to_pptx.py <project_path> -s final
 """
 
@@ -10,10 +11,6 @@ from pathlib import Path
 
 # Ensure the scripts directory is on sys.path so the package can be found
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-
-from runtime_support import ensure_uv_runtime
-
-ensure_uv_runtime("pptx", "svglib", "reportlab")
 
 from svg_to_pptx import main
 

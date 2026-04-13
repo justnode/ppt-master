@@ -26,13 +26,14 @@ import os
 import re
 import sys
 import time
+from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
 TOOLS_DIR = Path(__file__).resolve().parents[1]
 if str(TOOLS_DIR) not in sys.path:
     sys.path.insert(0, str(TOOLS_DIR))
 
-from runtime_support import ensure_uv_runtime
+from runtime_support import ensure_uv_runtime, resolve_projects_dir
 
 ensure_uv_runtime("requests", "bs4", "PIL")
 
@@ -54,7 +55,7 @@ except ImportError:
 
 # ============ Config ============
 CONFIG = {
-    "output_dir": "./projects",
+    "output_dir": str(resolve_projects_dir()),
     "timeout": 30,
     "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     # Specific content identifiers often found in Chinese CMS (Gov/News)
@@ -715,7 +716,7 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.dir:
-        CONFIG["output_dir"] = args.dir
+        CONFIG["output_dir"] = str(resolve_projects_dir(args.dir))
 
     targets = []
     if args.urls:

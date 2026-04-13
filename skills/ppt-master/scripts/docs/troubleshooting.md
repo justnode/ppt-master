@@ -61,7 +61,7 @@ This command creates the primary environment at `.venv` under the installed skil
 When you are running from a globally installed `~/.agents/skills/ppt-master` directory, the Python entry scripts will auto-bootstrap from its local `pyproject.toml` when `uv` is available.
 
 Important optional packages:
-- `python-pptx` for PPTX export
+- No extra package is required for the final HTML slideshow export
 - `Pillow` for image utilities
 - `numpy` for watermark removal
 - `PyMuPDF` for PDF conversion

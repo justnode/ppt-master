@@ -67,7 +67,7 @@ The General style is not confined to fixed templates; layouts can be freely chos
 Title layer   → 28-36px, bold, theme color or white
 Subtitle layer → 20-24px, medium weight, secondary color
 Body layer    → 16-18px, regular, dark gray
-Annotation layer → 12-14px, light gray, bottom-aligned
+Annotation layer → 12-14px, light gray, keep inside the main content area instead of a dedicated bottom footer strip
 ```
 
 ---

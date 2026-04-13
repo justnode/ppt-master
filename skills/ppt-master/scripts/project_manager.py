@@ -21,7 +21,7 @@ from urllib.parse import urlparse
 if str(Path(__file__).resolve().parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from runtime_support import REPO_ROOT
+from runtime_support import REPO_ROOT, resolve_projects_dir
 
 try:
     from project_utils import (
@@ -99,8 +99,8 @@ class ProjectManager:
 
     CANVAS_FORMATS = CANVAS_FORMATS
 
-    def __init__(self, base_dir: str = "projects") -> None:
-        self.base_dir = Path(base_dir)
+    def __init__(self, base_dir: str | None = None) -> None:
+        self.base_dir = resolve_projects_dir(base_dir)
 
     def init_project(
         self,
@@ -108,7 +108,7 @@ class ProjectManager:
         canvas_format: str = "ppt169",
         base_dir: str | None = None,
     ) -> str:
-        base_path = Path(base_dir) if base_dir else self.base_dir
+        base_path = resolve_projects_dir(base_dir) if base_dir else self.base_dir
 
         normalized_format = normalize_canvas_format(canvas_format)
         if normalized_format not in self.CANVAS_FORMATS:
@@ -567,14 +567,14 @@ def print_usage() -> None:
     print(__doc__)
 
 
-def parse_init_args(argv: list[str]) -> tuple[str, str, str]:
+def parse_init_args(argv: list[str]) -> tuple[str, str, str | None]:
     """Parse arguments for the `init` subcommand."""
     if len(argv) < 3:
         raise ValueError("Project name is required")
 
     project_name = argv[2]
     canvas_format = "ppt169"
-    base_dir = "projects"
+    base_dir: str | None = None
 
     i = 3
     while i < len(argv):
@@ -621,6 +621,10 @@ def main() -> None:
         sys.exit(1)
 
     command = sys.argv[1]
+    if command in {"-h", "--help", "help"}:
+        print_usage()
+        return
+
     manager = ProjectManager()
 
     try:

@@ -22,7 +22,7 @@ import sys
 if str(Path(__file__).resolve().parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from runtime_support import REPO_ROOT
+from runtime_support import REPO_ROOT, resolve_projects_dir, resolve_workspace_root
 
 
 # ============================================================
@@ -39,9 +39,9 @@ TEMPLATES_DIR = PROJECT_ROOT / 'templates'
 WORKFLOWS_DIR = PROJECT_ROOT / 'workflows'
 
 # Repository root directory
-WORKSPACE_ROOT = REPO_ROOT or Path.cwd()
+WORKSPACE_ROOT = REPO_ROOT or resolve_workspace_root()
 EXAMPLES_DIR = WORKSPACE_ROOT / 'examples'
-PROJECTS_DIR = WORKSPACE_ROOT / 'projects'
+PROJECTS_DIR = resolve_projects_dir()
 
 # Template subdirectories
 CHART_TEMPLATES_DIR = TEMPLATES_DIR / 'charts'

@@ -44,7 +44,7 @@ description: >
 > ## 🧰 Global Skill Runtime
 >
 > - This document uses the globally installed skill as the only command model
-> - All command examples in this document assume the current working directory is the installed skill root, typically `~/.agents/skills/ppt-master`
+> - Commands may be run from the caller workspace; generated projects default to `<caller-workspace>/projects` instead of the installed skill directory
 > - The primary runtime dependency source is `pyproject.toml` in the installed skill root
 > - When `uv` is available, scripts that need third-party packages will auto-bootstrap from the skill-local uv project
 > - When a local virtual environment is created for this skill, the canonical location is `.venv` under the installed skill root
@@ -65,7 +65,7 @@ description: >
 | `scripts/svg_quality_checker.py` | SVG quality check |
 | `scripts/total_md_split.py` | Speaker notes splitting |
 | `scripts/finalize_svg.py` | SVG post-processing (unified entry) |
-| `scripts/svg_to_pptx.py` | Export to PPTX |
+| `scripts/svg_to_pptx.py` | Export to single-file HTML slideshow |
 
 For complete tool documentation, see `scripts/README.md`.
 Primary Python dependency manifest for standalone/global installs: `pyproject.toml`
@@ -286,12 +286,11 @@ python3 scripts/total_md_split.py <project_path>
 python3 scripts/finalize_svg.py <project_path>
 ```
 
-**Step 7.3** — Export PPTX (embeds speaker notes by default):
+**Step 7.3** — Export HTML slideshow (embeds SVGs and speaker notes by default):
 ```bash
 python3 scripts/svg_to_pptx.py <project_path> -s final
-# Output: exports/<project_name>_<timestamp>.pptx + exports/<project_name>_<timestamp>_svg.pptx
-# Use --only native  to skip SVG reference version
-# Use --only legacy  to only generate SVG image version
+# Output: exports/<project_name>_<timestamp>.html
+# Open the HTML file in a browser and use Left / Right arrow keys to navigate
 ```
 
 > ❌ **NEVER** use `cp` as a substitute for `finalize_svg.py` — it performs multiple critical processing steps

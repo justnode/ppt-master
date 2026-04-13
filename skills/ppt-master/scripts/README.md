@@ -2,7 +2,7 @@
 
 This directory contains user-facing scripts for conversion, project setup, SVG processing, export, and image generation.
 
-Commands in this document assume your current working directory is the installed `ppt-master` skill root.
+Commands can be run from your current workspace. Generated projects default to `<current-workspace>/projects` rather than the installed skill directory.
 
 ## Runtime Notes
 
@@ -80,6 +80,8 @@ uv run python3 scripts/total_md_split.py <project_path>
 uv run python3 scripts/finalize_svg.py <project_path>
 uv run python3 scripts/svg_to_pptx.py <project_path> -s final
 ```
+
+This final step now generates a single-file HTML slideshow in `exports/`, with SVG slides embedded directly and arrow-key navigation in the browser.
 
 Image generation:
 

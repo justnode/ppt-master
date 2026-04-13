@@ -12,7 +12,7 @@ If template files exist in the project's `templates/` directory, the template st
 |-----------|----------------------|-----------------|
 | Cover | `01_cover.svg` | Inherit background, decorative elements, layout structure; replace placeholder content |
 | Chapter | `02_chapter.svg` | Inherit numbering style, title position, decorative elements |
-| Content | `03_content.svg` | Inherit header/footer styles; **content area may be freely laid out** |
+| Content | `03_content.svg` | Inherit header styles; omit footer by default; **content area may be freely laid out** |
 | Ending | `04_ending.svg` | Inherit background, thank-you message position, contact info layout |
 | TOC | `02_toc.svg` | **Optional**: Inherit TOC title, list styles |
 
@@ -25,7 +25,7 @@ Before generating each page, you must explicitly output which template (or "free
 🎯 **Adherence rules / layout strategy**: [specific description]
 ```
 
-- **Content pages**: Templates only define header and footer; the content area is freely laid out by the Executor
+- **Content pages**: Templates define the header and core frame; omit bottom footer bands and footer metadata unless the user explicitly asks for them
 - **No template**: Generate entirely per the Design Specification & Content Outline
 
 ---

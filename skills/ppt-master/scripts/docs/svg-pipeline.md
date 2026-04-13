@@ -1,6 +1,6 @@
 # SVG Pipeline Tools
 
-These tools cover post-processing, SVG validation, speaker notes, and PPTX export.
+These tools cover post-processing, SVG validation, speaker notes, and final HTML slideshow export.
 
 Commands in this document assume your current working directory is the installed `ppt-master` skill root.
 
@@ -28,27 +28,22 @@ It aggregates:
 
 ## `svg_to_pptx.py`
 
-Convert project SVGs into PPTX.
+Convert project SVGs into a single-file HTML slideshow.
 
 ```bash
 uv run python3 scripts/svg_to_pptx.py <project_path> -s final
-uv run python3 scripts/svg_to_pptx.py <project_path> -s final --only native
-uv run python3 scripts/svg_to_pptx.py <project_path> -s final --only legacy
 uv run python3 scripts/svg_to_pptx.py <project_path> -s final --no-notes
-uv run python3 scripts/svg_to_pptx.py <project_path> -t none
 uv run python3 scripts/svg_to_pptx.py <project_path> -s final --auto-advance 3
+uv run python3 scripts/svg_to_pptx.py <project_path> -s final -o exports/demo.html
 ```
 
 Behavior:
-- Default output: timestamped pair in `exports/` — `<project_name>_<timestamp>.pptx` (native editable) + `<project_name>_<timestamp>_svg.pptx` (SVG snapshot)
+- Default output: a timestamped HTML file in `exports/` — `<project_name>_<timestamp>.html`
 - Recommended source directory: `svg_final/`
+- Each slide SVG is embedded directly into the HTML file
+- The generated page supports Gallery / Scroll / Present views
+- In presentation mode use Left / Right arrow keys to switch slides
 - Speaker notes are embedded automatically unless `--no-notes` is used
-
-Dependency:
-
-```bash
-pip install python-pptx
-```
 
 ## `total_md_split.py`
 

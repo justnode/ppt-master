@@ -45,20 +45,6 @@
   </tr>
 </table>
 
----
-
-## 关于作者
-
-我是何雨果（Hugo He），一名投融资领域的专业人士（注册会计师 · 资产评估师 · 咨询工程师），同时也是一名开源产品实践者。
-
-PPT Master 源于一个真实的痛点：在投融资和咨询工作中，我每天都要制作和审阅大量 PPT，而市面上的 AI 幻灯片工具导出的都是图片，不是可编辑的元素。作为一个每天都需要点击进去修改内容的人，这完全不可接受。我需要的是真正的 DrawingML——点击任何元素都能直接编辑，就像手工搭建的一样。
-
-这个项目是我把**专业领域经验**和**产品工程能力**结合起来的一次实践——把一个复杂的专业痛点，变成一个任何人都能用的开源工具。
-
-🌐 [个人网站](https://www.hehugo.com/) · 📧 [heyug3@gmail.com](mailto:heyug3@gmail.com) · 🐙 [@hugohe3](https://github.com/hugohe3)
-
----
-
 ## 快速开始
 
 ### 1. 前置条件
@@ -165,57 +151,3 @@ GEMINI_MODEL=gemini-3.1-flash-image-preview
 ## 开源协议
 
 [MIT](LICENSE)
-
-## 致谢
-
-[SVG Repo](https://www.svgrepo.com/) · [Tabler Icons](https://github.com/tabler/tabler-icons) · [Robin Williams](https://en.wikipedia.org/wiki/Robin_Williams_(author))（CRAP 设计原则）· 麦肯锡、BCG、贝恩
-
-## 联系与合作
-
-欢迎合作交流、将 PPT Master 集成到你的工作流，或者单纯提问：
-
-- 💬 **提问与分享** — [GitHub Discussions](https://github.com/hugohe3/ppt-master/discussions)
-- 🐛 **Bug 反馈与功能建议** — [GitHub Issues](https://github.com/hugohe3/ppt-master/issues)
-- 📧 **商务 / 咨询 / 定制合作** — [heyug3@gmail.com](mailto:heyug3@gmail.com)
-- 🌐 **了解更多** — [www.hehugo.com](https://www.hehugo.com/)
-
----
-
-## Star History
-
-如果这个项目对你有帮助，请给一个 ⭐！
-
-<a href="https://star-history.com/#hugohe3/ppt-master&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=hugohe3/ppt-master&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=hugohe3/ppt-master&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=hugohe3/ppt-master&type=Date" />
- </picture>
-</a>
-
----
-
-## DigitalOcean Support
-
-<p>本项目获得 DigitalOcean Open Source Credits Program 支持：</p>
-<p>
-  <a href="https://m.do.co/c/547f129aabe1">
-    <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/PoweredByDO/DO_Powered_by_Badge_blue.svg" alt="Powered by DigitalOcean" width="201" />
-  </a>
-</p>
-
----
-
-## 赞助
-
-如果这个项目帮你省了时间，欢迎请我喝杯咖啡！
-
-**支付宝**
-
-<img src="docs/assets/alipay-qr.jpg" alt="支付宝收款码" width="250" />
-
----
-
-Made with ❤️ by [何雨果 Hugo He](https://www.hehugo.com/)
-
-[⬆ 回到顶部](#ppt-master--ai-生成原生可编辑-pptx支持任意文档输入)
