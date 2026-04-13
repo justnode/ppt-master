@@ -7,11 +7,11 @@ Image tools cover prompt-based generation, image inspection, and Gemini watermar
 Unified image generation entry point.
 
 ```bash
-python3 scripts/image_gen.py "A modern futuristic workspace"
-python3 scripts/image_gen.py "Abstract tech background" --aspect_ratio 16:9 --image_size 4K
-python3 scripts/image_gen.py "Concept car" -o projects/demo/images
-python3 scripts/image_gen.py "Beautiful landscape" -n "low quality, blurry, watermark"
-python3 scripts/image_gen.py --list-backends
+uv run python3 scripts/image_gen.py "A modern futuristic workspace"
+uv run python3 scripts/image_gen.py "Abstract tech background" --aspect_ratio 16:9 --image_size 4K
+uv run python3 scripts/image_gen.py "Concept car" -o projects/demo/images
+uv run python3 scripts/image_gen.py "Beautiful landscape" -n "low quality, blurry, watermark"
+uv run python3 scripts/image_gen.py --list-backends
 ```
 
 Support tiers:
@@ -22,11 +22,11 @@ Support tiers:
 Backend selection:
 
 ```bash
-python3 scripts/image_gen.py "A cat" --backend openai
-python3 scripts/image_gen.py "A cinematic portrait" --backend minimax
-python3 scripts/image_gen.py "A product launch hero image" --backend qwen
-python3 scripts/image_gen.py "科技感背景图" --backend zhipu
-python3 scripts/image_gen.py "A product KV in cinematic style" --backend volcengine
+uv run python3 scripts/image_gen.py "A cat" --backend openai
+uv run python3 scripts/image_gen.py "A cinematic portrait" --backend minimax
+uv run python3 scripts/image_gen.py "A product launch hero image" --backend qwen
+uv run python3 scripts/image_gen.py "科技感背景图" --backend zhipu
+uv run python3 scripts/image_gen.py "A product KV in cinematic style" --backend volcengine
 ```
 
 Configuration sources:
@@ -71,7 +71,7 @@ Recommendation:
 Analyze images in a project directory before writing the design spec or composing slide layouts.
 
 ```bash
-python3 scripts/analyze_images.py <project_path>/images
+uv run python3 scripts/analyze_images.py <project_path>/images
 ```
 
 Use this instead of opening image files directly when following the project workflow.
@@ -81,9 +81,9 @@ Use this instead of opening image files directly when following the project work
 Remove Gemini watermark assets after manual download.
 
 ```bash
-python3 scripts/gemini_watermark_remover.py <image_path>
-python3 scripts/gemini_watermark_remover.py <image_path> -o output_path.png
-python3 scripts/gemini_watermark_remover.py <image_path> -q
+uv run python3 scripts/gemini_watermark_remover.py <image_path>
+uv run python3 scripts/gemini_watermark_remover.py <image_path> -o output_path.png
+uv run python3 scripts/gemini_watermark_remover.py <image_path> -q
 ```
 
 Notes:

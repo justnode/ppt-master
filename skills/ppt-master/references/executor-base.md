@@ -240,12 +240,12 @@ Automatically split `notes/total.md` into individual speaker note files in the `
 
 ```bash
 # 1. Split speaker notes
-python3 scripts/total_md_split.py <project_path>
+uv run python3 scripts/total_md_split.py <project_path>
 
 # 2. SVG post-processing (auto-embed icons, images, etc.)
-python3 scripts/finalize_svg.py <project_path>
+uv run python3 scripts/finalize_svg.py <project_path>
 
 # 3. Export PPTX
-python3 scripts/svg_to_pptx.py <project_path> -s final
+uv run python3 scripts/svg_to_pptx.py <project_path> -s final
 # Output: exports/<project_name>_<timestamp>.pptx + exports/<project_name>_<timestamp>_svg.pptx
 ```

@@ -2,8 +2,8 @@
 """Update the repository and sync Python dependencies when needed.
 
 Usage:
-    python3 skills/ppt-master/scripts/update_repo.py
-    python3 skills/ppt-master/scripts/update_repo.py --skip-pip
+    uv run python3 skills/ppt-master/scripts/update_repo.py
+    uv run python3 skills/ppt-master/scripts/update_repo.py --skip-python-sync
 """
 
 from __future__ import annotations
@@ -12,27 +12,27 @@ import argparse
 import hashlib
 import shutil
 import subprocess
-import sys
 from pathlib import Path
 
 
 TOOLS_DIR = Path(__file__).resolve().parent
 SKILL_DIR = TOOLS_DIR.parent
 REPO_ROOT = SKILL_DIR.parent.parent
-REQUIREMENTS_FILE = REPO_ROOT / "requirements.txt"
+PYPROJECT_FILE = REPO_ROOT / "pyproject.toml"
+UV_LOCK_FILE = REPO_ROOT / "uv.lock"
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description=(
             "Pull the latest repository changes and sync Python dependencies "
-            "only when requirements.txt changes."
+            "only when dependency metadata changes."
         )
     )
     parser.add_argument(
-        "--skip-pip",
+        "--skip-python-sync",
         action="store_true",
-        help="Skip Python dependency sync even if requirements.txt changed.",
+        help="Skip Python dependency sync even if dependency files changed.",
     )
     return parser.parse_args()
 
@@ -83,12 +83,15 @@ def get_head_revision() -> str:
 
 
 def sync_python_dependencies() -> None:
-    if not REQUIREMENTS_FILE.exists():
-        print("requirements.txt not found; skipping Python dependency sync.")
+    if not PYPROJECT_FILE.exists():
+        print("pyproject.toml not found; skipping Python dependency sync.")
         return
+    if shutil.which("uv") is None:
+        raise RuntimeError("Missing executable: uv")
 
-    print("requirements.txt changed. Syncing Python dependencies...")
-    result = run_command([sys.executable, "-m", "pip", "install", "-r", str(REQUIREMENTS_FILE)])
+    print("Dependency files changed. Syncing Python dependencies with uv...")
+    result = run_command(["uv", "sync"])
+
     if result.stdout.strip():
         print(result.stdout.strip())
     if result.stderr.strip():
@@ -103,7 +106,10 @@ def main() -> int:
         ensure_clean_tracked_worktree()
 
         before_head = get_head_revision()
-        before_requirements = file_digest(REQUIREMENTS_FILE)
+        before_dependency_state = {
+            "pyproject": file_digest(PYPROJECT_FILE),
+            "uv_lock": file_digest(UV_LOCK_FILE),
+        }
 
         print(f"Repository: {REPO_ROOT}")
         pull_result = run_command(["git", "pull", "--ff-only"])
@@ -113,19 +119,22 @@ def main() -> int:
             print(pull_result.stderr.strip())
 
         after_head = get_head_revision()
-        after_requirements = file_digest(REQUIREMENTS_FILE)
+        after_dependency_state = {
+            "pyproject": file_digest(PYPROJECT_FILE),
+            "uv_lock": file_digest(UV_LOCK_FILE),
+        }
 
         if before_head == after_head:
             print("Repository is already up to date.")
         else:
             print(f"Updated from {before_head[:7]} to {after_head[:7]}.")
 
-        if args.skip_pip:
-            print("Skipped Python dependency sync (--skip-pip).")
-        elif before_requirements != after_requirements:
+        if args.skip_python_sync:
+            print("Skipped Python dependency sync.")
+        elif before_dependency_state != after_dependency_state:
             sync_python_dependencies()
         else:
-            print("requirements.txt unchanged. Skipping Python dependency sync.")
+            print("Dependency files unchanged. Skipping Python dependency sync.")
 
         print("Note: system dependencies such as Node.js and Pandoc still need to be installed manually.")
         return 0

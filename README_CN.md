@@ -63,7 +63,7 @@ PPT Master 源于一个真实的痛点：在投融资和咨询工作中，我每
 
 ### 1. 前置条件
 
-**必需：** [Python](https://www.python.org/downloads/) 3.10+ · **可选：** [Node.js](https://nodejs.org/) 18+（微信公众号转换）· [Pandoc](https://pandoc.org/)（DOCX/EPUB 转换）
+**必需：** [Python](https://www.python.org/downloads/) 3.10+ · `uv` · **可选：** [Node.js](https://nodejs.org/) 18+（微信公众号转换）· [Pandoc](https://pandoc.org/)（DOCX/EPUB 转换）
 
 ```bash
 # macOS
@@ -92,10 +92,14 @@ sudo apt install pandoc          # 可选
 ```bash
 git clone https://github.com/hugohe3/ppt-master.git
 cd ppt-master
-pip install -r requirements.txt
+uv sync
 ```
 
-日常更新：`python3 skills/ppt-master/scripts/update_repo.py`
+之后建议通过 `uv run` 执行项目脚本，例如：
+
+```bash
+uv run python3 skills/ppt-master/scripts/update_repo.py
+```
 
 ### 4. 开始创作
 
@@ -133,7 +137,7 @@ GEMINI_MODEL=gemini-3.1-flash-image-preview
 
 支持的后端：`gemini` · `openai` · `qwen` · `zhipu` · `volcengine` · `stability` · `bfl` · `ideogram` · `siliconflow` · `fal` · `replicate`
 
-运行 `python3 skills/ppt-master/scripts/image_gen.py --list-backends` 查看分级。环境变量优先于 `.env`。使用各家独立的 Key（`GEMINI_API_KEY`、`OPENAI_API_KEY` 等）——不支持全局 `IMAGE_API_KEY`。
+运行 `uv run python3 skills/ppt-master/scripts/image_gen.py --list-backends` 查看分级。环境变量优先于 `.env`。使用各家独立的 Key（`GEMINI_API_KEY`、`OPENAI_API_KEY` 等）——不支持全局 `IMAGE_API_KEY`。
 
 > **建议：** 高质量图片推荐在 [Gemini](https://gemini.google.com/) 中生成并选择 **Download full size**。去水印可用 `scripts/gemini_watermark_remover.py`。
 

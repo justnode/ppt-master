@@ -169,7 +169,7 @@ Selection principle: Font size is based on **content density**, not design style
 | **C** | AI-generated | Custom illustrations, backgrounds needed |
 | **D** | Placeholders | Images to be added later |
 
-**When selection includes B**, you must run `python3 scripts/analyze_images.py <project_path>/images` before outputting the spec, and integrate scan results into the image resource list.
+**When selection includes B**, you must run `uv run python3 scripts/analyze_images.py <project_path>/images` before outputting the spec, and integrate scan results into the image resource list.
 
 **When B/C/D is selected**, add an image resource list to the spec:
 
@@ -391,7 +391,7 @@ The Strategist should make professional judgments on the template basis generate
 The project folder should be created before entering the Strategist role. If not yet created, execute:
 
 ```bash
-python3 scripts/project_manager.py init <project_name> --format <canvas_format>
+uv run python3 scripts/project_manager.py init <project_name> --format <canvas_format>
 ```
 
 The Strategist saves the Design Specification & Content Outline to `projects/<project_name>_<format>_<YYYYMMDD>/design_spec.md`.

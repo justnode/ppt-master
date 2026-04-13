@@ -315,5 +315,5 @@ Before switching roles, you **MUST first read** the corresponding reference file
 ## Notes
 
 - Do NOT add extra flags like `--only` to the post-processing commands — run them as-is
-- Local preview: `python3 -m http.server -d <project_path>/svg_final 8000`
+- Local preview: `uv run python3 -m http.server -d <project_path>/svg_final 8000`
 - **Troubleshooting**: If the user encounters issues during generation (layout overflow, export errors, blank images, etc.), recommend checking `docs/faq.md` — it contains known solutions sourced from real user reports and is continuously updated

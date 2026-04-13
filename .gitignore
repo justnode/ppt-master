@@ -159,6 +159,8 @@ yarn.lock
 .cache/
 *.lock
 .lock
+!uv.lock
+.venv/
 
 # Personal notes
 TODO.md

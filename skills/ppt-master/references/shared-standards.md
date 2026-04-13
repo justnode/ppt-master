@@ -218,13 +218,13 @@ Must be executed in order — skipping or adding extra flags is FORBIDDEN:
 
 ```bash
 # 1. Split speaker notes into per-page note files
-python3 scripts/total_md_split.py <project_path>
+uv run python3 scripts/total_md_split.py <project_path>
 
 # 2. SVG post-processing (icon embedding, image crop/embed, text flattening, rounded rect to path)
-python3 scripts/finalize_svg.py <project_path>
+uv run python3 scripts/finalize_svg.py <project_path>
 
 # 3. Export PPTX (from svg_final/, embeds speaker notes by default)
-python3 scripts/svg_to_pptx.py <project_path> -s final
+uv run python3 scripts/svg_to_pptx.py <project_path> -s final
 # Output: exports/<project_name>_<timestamp>.pptx + exports/<project_name>_<timestamp>_svg.pptx
 ```
 

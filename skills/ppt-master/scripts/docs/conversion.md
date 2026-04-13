@@ -7,10 +7,10 @@ Source conversion tools turn PDFs, documents, slide decks, and web pages into Ma
 Recommended first choice for native PDFs.
 
 ```bash
-python3 scripts/source_to_md/pdf_to_md.py book.pdf
-python3 scripts/source_to_md/pdf_to_md.py book.pdf -o output.md
-python3 scripts/source_to_md/pdf_to_md.py ./pdfs
-python3 scripts/source_to_md/pdf_to_md.py ./pdfs -o ./markdown
+uv run python3 scripts/source_to_md/pdf_to_md.py book.pdf
+uv run python3 scripts/source_to_md/pdf_to_md.py book.pdf -o output.md
+uv run python3 scripts/source_to_md/pdf_to_md.py ./pdfs
+uv run python3 scripts/source_to_md/pdf_to_md.py ./pdfs -o ./markdown
 ```
 
 Use cases:
@@ -38,10 +38,10 @@ Supported formats include:
 - `.epub`, `.html`, `.tex`, `.rst`, `.org`, `.ipynb`, `.typ`
 
 ```bash
-python3 scripts/source_to_md/doc_to_md.py lecture.docx
-python3 scripts/source_to_md/doc_to_md.py lecture.docx -o output.md
-python3 scripts/source_to_md/doc_to_md.py notes.epub
-python3 scripts/source_to_md/doc_to_md.py paper.tex -o paper.md
+uv run python3 scripts/source_to_md/doc_to_md.py lecture.docx
+uv run python3 scripts/source_to_md/doc_to_md.py lecture.docx -o output.md
+uv run python3 scripts/source_to_md/doc_to_md.py notes.epub
+uv run python3 scripts/source_to_md/doc_to_md.py paper.tex -o paper.md
 ```
 
 Dependency:
@@ -64,11 +64,11 @@ Supported formats include:
 - `.potx`, `.potm`
 
 ```bash
-python3 scripts/source_to_md/ppt_to_md.py sales_deck.pptx
-python3 scripts/source_to_md/ppt_to_md.py sales_deck.pptx -o output.md
-python3 scripts/source_to_md/ppt_to_md.py ./decks
-python3 scripts/source_to_md/ppt_to_md.py ./decks -o ./markdown
-python3 scripts/source_to_md/ppt_to_md.py template.ppsx -o notes/template.md
+uv run python3 scripts/source_to_md/ppt_to_md.py sales_deck.pptx
+uv run python3 scripts/source_to_md/ppt_to_md.py sales_deck.pptx -o output.md
+uv run python3 scripts/source_to_md/ppt_to_md.py ./decks
+uv run python3 scripts/source_to_md/ppt_to_md.py ./decks -o ./markdown
+uv run python3 scripts/source_to_md/ppt_to_md.py template.ppsx -o notes/template.md
 ```
 
 Behavior:
@@ -92,10 +92,10 @@ Convert web pages to Markdown and download images locally.
 Python version:
 
 ```bash
-python3 scripts/source_to_md/web_to_md.py https://example.com/article
-python3 scripts/source_to_md/web_to_md.py https://url1.com https://url2.com
-python3 scripts/source_to_md/web_to_md.py -f urls.txt
-python3 scripts/source_to_md/web_to_md.py https://example.com -o output.md
+uv run python3 scripts/source_to_md/web_to_md.py https://example.com/article
+uv run python3 scripts/source_to_md/web_to_md.py https://url1.com https://url2.com
+uv run python3 scripts/source_to_md/web_to_md.py -f urls.txt
+uv run python3 scripts/source_to_md/web_to_md.py https://example.com -o output.md
 ```
 
 Node.js version for WeChat or anti-bot pages:
@@ -112,9 +112,9 @@ Use the Node.js version first for WeChat Official Accounts and similar high-secu
 Fix image EXIF orientation in downloaded or imported assets.
 
 ```bash
-python3 scripts/rotate_images.py auto projects/xxx_files
-python3 scripts/rotate_images.py gen projects/xxx_files
-python3 scripts/rotate_images.py fix fixes.json
+uv run python3 scripts/rotate_images.py auto projects/xxx_files
+uv run python3 scripts/rotate_images.py gen projects/xxx_files
+uv run python3 scripts/rotate_images.py fix fixes.json
 ```
 
 Use this when extracted photos appear sideways after conversion or import.

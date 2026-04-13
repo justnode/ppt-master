@@ -25,8 +25,10 @@ Thank you for your interest in contributing! This guide will help you get starte
 ```bash
 git clone https://github.com/hugohe3/ppt-master.git
 cd ppt-master
-pip install -r requirements.txt
+uv sync
 ```
+
+Run Python scripts with `uv run` unless you intentionally activate another environment.
 
 ## Contribution Workflow
 

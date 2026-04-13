@@ -63,7 +63,7 @@ This project is my attempt to bridge the gap between **domain expertise** and **
 
 ### 1. Prerequisites
 
-**Required:** [Python](https://www.python.org/downloads/) 3.10+ · **Optional:** [Node.js](https://nodejs.org/) 18+ (for WeChat page conversion) · [Pandoc](https://pandoc.org/) (for DOCX/EPUB conversion)
+**Required:** [Python](https://www.python.org/downloads/) 3.10+ · `uv` · **Optional:** [Node.js](https://nodejs.org/) 18+ (for WeChat page conversion) · [Pandoc](https://pandoc.org/) (for DOCX/EPUB conversion)
 
 ```bash
 # macOS
@@ -92,10 +92,14 @@ sudo apt install pandoc          # optional
 ```bash
 git clone https://github.com/hugohe3/ppt-master.git
 cd ppt-master
-pip install -r requirements.txt
+uv sync
 ```
 
-To update later: `python3 skills/ppt-master/scripts/update_repo.py`
+Then run project scripts with `uv run`, for example:
+
+```bash
+uv run python3 skills/ppt-master/scripts/update_repo.py
+```
 
 ### 4. Create
 
@@ -133,7 +137,7 @@ GEMINI_MODEL=gemini-3.1-flash-image-preview
 
 Supported backends: `gemini` · `openai` · `qwen` · `zhipu` · `volcengine` · `stability` · `bfl` · `ideogram` · `siliconflow` · `fal` · `replicate`
 
-Run `python3 skills/ppt-master/scripts/image_gen.py --list-backends` to see tiers. Environment variables override `.env`. Use provider-specific keys (`GEMINI_API_KEY`, `OPENAI_API_KEY`, etc.) — global `IMAGE_API_KEY` is not supported.
+Run `uv run python3 skills/ppt-master/scripts/image_gen.py --list-backends` to see tiers. Environment variables override `.env`. Use provider-specific keys (`GEMINI_API_KEY`, `OPENAI_API_KEY`, etc.) — global `IMAGE_API_KEY` is not supported.
 
 > **Tip:** For best quality, generate images in [Gemini](https://gemini.google.com/) and select **Download full size**. Remove the watermark with `scripts/gemini_watermark_remover.py`.
 

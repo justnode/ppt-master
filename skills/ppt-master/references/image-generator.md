@@ -250,7 +250,7 @@ For each image with "Pending" status:
 #### Method 1: Unified CLI Tool (Recommended)
 
 ```bash
-python3 scripts/image_gen.py "your prompt" \
+uv run python3 scripts/image_gen.py "your prompt" \
   --aspect_ratio 16:9 --image_size 1K \
   --output project/images --filename cover_bg
 ```
@@ -308,7 +308,7 @@ Directly call image generation API, download and save to `project/images/` direc
 
 1. Generate images in [Gemini](https://gemini.google.com/)
 2. Select **Download full size** for high-resolution version
-3. Remove watermark: `python3 scripts/gemini_watermark_remover.py <image_path>`
+3. Remove watermark: `uv run python3 scripts/gemini_watermark_remover.py <image_path>`
 4. Place processed images in `project/images/` directory
 
 #### Method 4: Manual Generation (Other AI Platforms)
