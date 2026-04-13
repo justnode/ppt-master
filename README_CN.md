@@ -101,6 +101,8 @@ uv sync
 uv run python3 skills/ppt-master/scripts/update_repo.py
 ```
 
+如果你安装的是独立的全局 `skills/ppt-master`，其中的 Python 入口脚本在检测到 `uv` 时也会基于 `skills/ppt-master/requirements.txt` 自动拉起依赖；但像 `update_repo.py` 这类仓库维护命令仍然只能在完整 git 仓库中使用。
+
 ### 4. 开始创作
 
 打开 AI 聊天面板，描述你想要的内容：

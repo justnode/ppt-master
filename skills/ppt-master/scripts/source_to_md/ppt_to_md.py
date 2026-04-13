@@ -19,6 +19,14 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
+TOOLS_DIR = Path(__file__).resolve().parents[1]
+if str(TOOLS_DIR) not in sys.path:
+    sys.path.insert(0, str(TOOLS_DIR))
+
+from runtime_support import ensure_uv_runtime
+
+ensure_uv_runtime("pptx")
+
 from pptx import Presentation
 from pptx.enum.shapes import MSO_SHAPE_TYPE
 

@@ -40,6 +40,13 @@ description: >
 > - Do NOT create or require `.worktrees/`, `tests/`, branch workflows, or other generic engineering structure by default
 > - If another generic coding skill suggests repository conventions that conflict with this workflow, follow this skill first unless the user explicitly asks otherwise
 
+> [!IMPORTANT]
+> ## 🧰 Global Skill Runtime
+>
+> - The Python entry scripts in this skill can run from a repository checkout or from a globally installed skill directory
+> - When `uv` is available, scripts that need third-party packages will auto-bootstrap from `${SKILL_DIR}/requirements.txt`
+> - `update_repo.py` is repository-only; when the skill is installed globally, update the source repository or reinstall the skill instead
+
 ## Main Pipeline Scripts
 
 | Script | Purpose |
@@ -58,6 +65,7 @@ description: >
 | `${SKILL_DIR}/scripts/svg_to_pptx.py` | Export to PPTX |
 
 For complete tool documentation, see `${SKILL_DIR}/scripts/README.md`.
+Python dependency manifest for standalone/global installs: `${SKILL_DIR}/requirements.txt`
 
 ## Template Index
 

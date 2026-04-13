@@ -23,6 +23,14 @@ from pathlib import Path
 from xml.etree import ElementTree as ET
 from urllib.parse import unquote
 
+TOOLS_DIR = Path(__file__).resolve().parents[1]
+if str(TOOLS_DIR) not in sys.path:
+    sys.path.insert(0, str(TOOLS_DIR))
+
+from runtime_support import ensure_uv_runtime
+
+ensure_uv_runtime("PIL")
+
 try:
     from PIL import Image
 except ImportError:

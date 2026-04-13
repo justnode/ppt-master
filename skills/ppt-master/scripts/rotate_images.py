@@ -17,6 +17,14 @@ import json
 import re
 from pathlib import Path
 from typing import List, Dict, Union, Any, Optional
+
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from runtime_support import ensure_uv_runtime
+
+ensure_uv_runtime("PIL")
+
 from PIL import Image, ExifTags
 
 

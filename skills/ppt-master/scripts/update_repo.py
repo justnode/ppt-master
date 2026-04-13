@@ -12,14 +12,18 @@ import argparse
 import hashlib
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from runtime_support import REPO_ROOT
 
 TOOLS_DIR = Path(__file__).resolve().parent
 SKILL_DIR = TOOLS_DIR.parent
-REPO_ROOT = SKILL_DIR.parent.parent
-PYPROJECT_FILE = REPO_ROOT / "pyproject.toml"
-UV_LOCK_FILE = REPO_ROOT / "uv.lock"
+PYPROJECT_FILE = REPO_ROOT / "pyproject.toml" if REPO_ROOT else None
+UV_LOCK_FILE = REPO_ROOT / "uv.lock" if REPO_ROOT else None
 
 
 def parse_args() -> argparse.Namespace:
@@ -38,6 +42,11 @@ def parse_args() -> argparse.Namespace:
 
 
 def run_command(args: list[str], *, check: bool = True) -> subprocess.CompletedProcess[str]:
+    if REPO_ROOT is None:
+        raise RuntimeError(
+            "This command only works inside a ppt-master repository checkout. "
+            "For a globally installed skill, reinstall or update the source repository instead."
+        )
     return subprocess.run(
         args,
         cwd=REPO_ROOT,
@@ -83,7 +92,7 @@ def get_head_revision() -> str:
 
 
 def sync_python_dependencies() -> None:
-    if not PYPROJECT_FILE.exists():
+    if PYPROJECT_FILE is None or not PYPROJECT_FILE.exists():
         print("pyproject.toml not found; skipping Python dependency sync.")
         return
     if shutil.which("uv") is None:
@@ -107,8 +116,8 @@ def main() -> int:
 
         before_head = get_head_revision()
         before_dependency_state = {
-            "pyproject": file_digest(PYPROJECT_FILE),
-            "uv_lock": file_digest(UV_LOCK_FILE),
+            "pyproject": file_digest(PYPROJECT_FILE) if PYPROJECT_FILE else None,
+            "uv_lock": file_digest(UV_LOCK_FILE) if UV_LOCK_FILE else None,
         }
 
         print(f"Repository: {REPO_ROOT}")
@@ -120,8 +129,8 @@ def main() -> int:
 
         after_head = get_head_revision()
         after_dependency_state = {
-            "pyproject": file_digest(PYPROJECT_FILE),
-            "uv_lock": file_digest(UV_LOCK_FILE),
+            "pyproject": file_digest(PYPROJECT_FILE) if PYPROJECT_FILE else None,
+            "uv_lock": file_digest(UV_LOCK_FILE) if UV_LOCK_FILE else None,
         }
 
         if before_head == after_head:

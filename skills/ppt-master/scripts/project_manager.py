@@ -18,6 +18,11 @@ from datetime import datetime
 from pathlib import Path
 from urllib.parse import urlparse
 
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from runtime_support import REPO_ROOT
+
 try:
     from project_utils import (
         CANVAS_FORMATS,
@@ -40,7 +45,6 @@ except ImportError:
 
 TOOLS_DIR = Path(__file__).resolve().parent
 SKILL_DIR = TOOLS_DIR.parent
-REPO_ROOT = SKILL_DIR.parent.parent
 SOURCE_DIRNAME = "sources"
 TEXT_SOURCE_SUFFIXES = {".md", ".markdown", ".txt"}
 PDF_SUFFIXES = {".pdf"}
@@ -205,7 +209,7 @@ class ProjectManager:
         try:
             result = subprocess.run(
                 args,
-                cwd=REPO_ROOT,
+                cwd=Path.cwd(),
                 check=True,
                 capture_output=True,
                 text=True,
@@ -423,7 +427,7 @@ class ProjectManager:
                 effective_move = False
             elif move:
                 effective_move = True
-            elif is_within_path(source_path, REPO_ROOT):
+            elif REPO_ROOT is not None and is_within_path(source_path, REPO_ROOT):
                 effective_move = True
                 print(
                     f"note: {source_path} is inside the ppt-master repo; moved "

@@ -32,6 +32,13 @@ import shutil
 import argparse
 from pathlib import Path
 
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from runtime_support import ensure_uv_runtime
+
+ensure_uv_runtime("PIL")
+
 # Import finalize helpers from the internal package.
 sys.path.insert(0, str(Path(__file__).parent))
 from svg_finalize.crop_images import process_svg_images as crop_images_in_svg

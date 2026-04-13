@@ -11,6 +11,10 @@ from pathlib import Path
 # Ensure the scripts directory is on sys.path so the package can be found
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from runtime_support import ensure_uv_runtime
+
+ensure_uv_runtime("pptx", "svglib", "reportlab")
+
 from svg_to_pptx import main
 
 if __name__ == '__main__':

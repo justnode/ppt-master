@@ -28,6 +28,14 @@ import sys
 import time
 from urllib.parse import urljoin, urlparse
 
+TOOLS_DIR = Path(__file__).resolve().parents[1]
+if str(TOOLS_DIR) not in sys.path:
+    sys.path.insert(0, str(TOOLS_DIR))
+
+from runtime_support import ensure_uv_runtime
+
+ensure_uv_runtime("requests", "bs4", "PIL")
+
 try:
     import requests
     from bs4 import BeautifulSoup, NavigableString, Tag

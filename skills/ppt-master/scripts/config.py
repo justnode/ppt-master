@@ -17,6 +17,12 @@ Usage:
 from pathlib import Path
 from typing import Dict, List, Optional, Any
 import json
+import sys
+
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from runtime_support import REPO_ROOT
 
 
 # ============================================================
@@ -33,9 +39,9 @@ TEMPLATES_DIR = PROJECT_ROOT / 'templates'
 WORKFLOWS_DIR = PROJECT_ROOT / 'workflows'
 
 # Repository root directory
-REPO_ROOT = PROJECT_ROOT.parent.parent
-EXAMPLES_DIR = REPO_ROOT / 'examples'
-PROJECTS_DIR = REPO_ROOT / 'projects'
+WORKSPACE_ROOT = REPO_ROOT or Path.cwd()
+EXAMPLES_DIR = WORKSPACE_ROOT / 'examples'
+PROJECTS_DIR = WORKSPACE_ROOT / 'projects'
 
 # Template subdirectories
 CHART_TEMPLATES_DIR = TEMPLATES_DIR / 'charts'

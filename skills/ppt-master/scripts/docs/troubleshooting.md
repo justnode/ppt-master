@@ -54,6 +54,8 @@ Most tools use the standard library. Install extra dependencies only when needed
 uv sync
 ```
 
+If you are running from a globally installed `skills/ppt-master` directory instead of a repository checkout, the Python entry scripts will auto-bootstrap from `skills/ppt-master/requirements.txt` when `uv` is available.
+
 Important optional packages:
 - `python-pptx` for PPTX export
 - `Pillow` for image utilities

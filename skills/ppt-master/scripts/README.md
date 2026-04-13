@@ -2,6 +2,12 @@
 
 This directory contains user-facing scripts for conversion, project setup, SVG processing, export, and image generation.
 
+## Runtime Notes
+
+- In a repository checkout, `uv sync` remains the recommended setup
+- In a globally installed skill, Python entry scripts auto-bootstrap from `../requirements.txt` when `uv` is available
+- `update_repo.py` only works inside a git checkout of the ppt-master repository
+
 ## Directory Layout
 
 - Top-level `scripts/`: runnable entry scripts

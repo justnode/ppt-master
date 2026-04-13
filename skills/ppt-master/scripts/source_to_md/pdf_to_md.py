@@ -5,13 +5,23 @@ Uses PyMuPDF to extract PDF text content and convert to Markdown format.
 Supports heading levels, bold, italic, and list detection.
 """
 
-import fitz  # PyMuPDF
 import argparse
 import hashlib
 import os
 import re
+import sys
 from pathlib import Path
 from collections import Counter
+
+TOOLS_DIR = Path(__file__).resolve().parents[1]
+if str(TOOLS_DIR) not in sys.path:
+    sys.path.insert(0, str(TOOLS_DIR))
+
+from runtime_support import ensure_uv_runtime
+
+ensure_uv_runtime("fitz")
+
+import fitz  # PyMuPDF
 
 FONT_BODY_SIZE = 12
 FONT_H1_SIZE = 24

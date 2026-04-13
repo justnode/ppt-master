@@ -101,6 +101,8 @@ Then run project scripts with `uv run`, for example:
 uv run python3 skills/ppt-master/scripts/update_repo.py
 ```
 
+If you install only `skills/ppt-master` as a global skill, its Python entry scripts can also self-bootstrap from `skills/ppt-master/requirements.txt` when `uv` is available. Repository-only commands such as `update_repo.py` still require a full git checkout.
+
 ### 4. Create
 
 Open the AI chat panel and describe what you want:

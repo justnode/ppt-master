@@ -41,7 +41,15 @@ import sys
 import argparse
 from pathlib import Path
 
-ENV_PATH = Path(__file__).resolve().parents[3] / ".env"
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from runtime_support import ensure_uv_runtime, find_env_file
+
+if not any(flag in sys.argv[1:] for flag in ("-h", "--help", "--list-backends")):
+    ensure_uv_runtime()
+
+ENV_PATH = find_env_file()
 IMAGE_ENV_PREFIXES = (
     "IMAGE_",
     "GEMINI_",
@@ -195,7 +203,7 @@ def _load_image_env_file() -> None:
 
     Existing process environment variables win over `.env`.
     """
-    if not ENV_PATH.exists():
+    if ENV_PATH is None or not ENV_PATH.exists():
         return
 
     with ENV_PATH.open("r", encoding="utf-8") as fh:
